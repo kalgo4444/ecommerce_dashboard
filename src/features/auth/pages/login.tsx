@@ -1,10 +1,11 @@
 import { memo, useEffect, useRef } from "react";
 import type { FormProps, InputRef } from "antd";
-import { Button, Form, Input } from "antd";
+import { Alert, Button, Form, Input } from "antd";
 import { useAuth } from "../services/useAuth";
-import { useDispatch } from "react-redux";
-import { setToken } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser, setToken } from "../store/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import type { RootState } from "../../../app/store";
 
 type FieldType = {
   email: string;
@@ -15,6 +16,7 @@ const Login = () => {
   const { signIn } = useAuth();
   const dis = useDispatch();
   const nav = useNavigate();
+  const { user } = useSelector((state: RootState) => state.auth);
   const inputRef = useRef<InputRef>(null);
 
   useEffect(() => {
@@ -24,11 +26,19 @@ const Login = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     signIn.mutate(values, {
       onSuccess: (res) => {
+        console.log(res);
         dis(setToken(res.data));
+        dis(removeUser());
         nav("/");
       },
     });
   };
+
+  const message = signIn.error?.response?.data?.message;
+  const errorMessage =
+    typeof message === "string"
+      ? message
+      : message?.map((item: string, inx: number) => <p key={inx}>{item}</p>);
 
   return (
     <section className="bg-blue-500 w-full h-screen grid place-items-center">
@@ -40,6 +50,9 @@ const Login = () => {
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
+          initialValues={
+            user ? { email: user.email, password: user.password } : {}
+          }
         >
           <Form.Item<FieldType>
             label="Email"
@@ -57,24 +70,27 @@ const Login = () => {
             <Input.Password style={{ height: "40px" }} />
           </Form.Item>
 
-          {/* {signIn.isError && (
+          {signIn.isError && (
             <div className="mb-5">
-              <Alert
-                message={signIn.error?.response?.data?.message}
-                type="error"
-              />
+              <Alert message={errorMessage} type="error" />
             </div>
-          )} */}
+          )}
 
           <Form.Item label={null}>
             <Button
               loading={signIn.isPending}
-              style={{ width: "100%" }}
+              style={{ width: "100%", height: "40px" }}
               type="primary"
               htmlType="submit"
             >
               Submit
             </Button>
+            <Link
+              className="w-full rounded-md h-10 border border-blue-500 mt-2 grid place-items-center"
+              to={"/register"}
+            >
+              Register
+            </Link>
           </Form.Item>
         </Form>
       </div>

@@ -10,6 +10,7 @@ const Users = lazy(() => import("../features/users/pages/users"));
 const Auth = lazy(() => import("../features/auth/pages/auth"));
 const Login = lazy(() => import("../features/auth/pages/login"));
 const Register = lazy(() => import("../features/auth/pages/register"));
+const Otp = lazy(() => import("../features/auth/pages/otp"));
 
 const AppRoutes = () => {
   return useRoutes([
@@ -44,6 +45,10 @@ const AppRoutes = () => {
     {
       path: "/register",
       element: <Register />,
+    },
+    {
+      path: "/otp",
+      element: <Otp />,
     },
     {
       path: "*",

@@ -1,16 +1,17 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getLocal, removeLocal, setLocal } from "../../../shared/helper";
-import type { IUser } from "../../users/interface";
 
 interface IinitialState {
   token: string | null;
-  user: IUser | null;
+  user: any | null;
   key: string;
 }
 
+const userLocal = getLocal("user");
+
 const initialState: IinitialState = {
-  token: getLocal("token") || null,
-  user: null,
+  token: localStorage.getItem("token") || null,
+  user: userLocal ? userLocal : null,
   key: "",
 };
 
@@ -20,11 +21,11 @@ export const authSlice = createSlice({
   reducers: {
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload;
-      setLocal("token", state.token);
+      localStorage.setItem("token", state.token);
     },
     removeToken: (state) => {
       state.token = null;
-      removeLocal("token");
+      localStorage.removeItem("token");
     },
     setKey: (state, action: PayloadAction<string>) => {
       state.key = action.payload;
@@ -32,11 +33,13 @@ export const authSlice = createSlice({
     removeKey: (state) => {
       state.key = "";
     },
-    setUser: (state, action: PayloadAction<IUser>) => {
+    setUser: (state, action: PayloadAction<any>) => {
       state.user = action.payload;
+      setLocal("user", JSON.stringify(state.user));
     },
     removeUser: (state) => {
       state.user = null;
+      removeLocal("user");
     },
   },
 });

@@ -1,8 +1,12 @@
-import { memo } from "react";
-import { Space, Table } from "antd";
+import { memo, type FC } from "react";
+import { Table } from "antd";
 import type { IUser } from "../../interface";
 
-const UserTable = ({ data }: { data: IUser[] }) => {
+interface Props {
+  data: IUser[] | undefined;
+}
+
+const UserTable: FC<Props> = ({ data }) => {
   const { Column } = Table;
 
   return (
@@ -13,25 +17,6 @@ const UserTable = ({ data }: { data: IUser[] }) => {
       <Column title="Address" dataIndex="address" key="address" />
       <Column title="Email" dataIndex="email" key="email" />
       <Column title="Role" dataIndex="role" key="role" />
-      <Column
-        title="Action"
-        render={(_: any, render: IUser) => (
-          <Space size="middle">
-            <button
-              className="bg-blue-500 py-1 px-2 rounded text-white font-semibold hover:bg-blue-400 transition duration-200"
-              onClick={() => alert(`Item id ${render.id}`)}
-            >
-              Update
-            </button>
-            <button
-              className="bg-blue-500 py-1 px-2 rounded text-white font-semibold hover:bg-blue-400 transition duration-200"
-              onClick={() => alert(`Item id ${render.id}`)}
-            >
-              Delete
-            </button>
-          </Space>
-        )}
-      />
     </Table>
   );
 };
