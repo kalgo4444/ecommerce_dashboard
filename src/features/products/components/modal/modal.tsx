@@ -9,6 +9,8 @@ import {
   removeEditingItem,
 } from "../../store/productsSlice";
 
+import { toast } from "sonner";
+
 type FieldType = {
   name: string;
 };
@@ -29,18 +31,18 @@ const CategoryModal = () => {
           body: values,
         },
         {
-          onSuccess: (res) => {
-            console.log(res);
+          onSuccess: () => {
             dis(closeCategoryModal());
             dis(removeEditingItem());
+            toast.success("Success");
           },
         }
       );
     } else {
       createCategory.mutate(values, {
-        onSuccess: (res) => {
-          console.log(res);
+        onSuccess: () => {
           dis(closeCategoryModal());
+          toast.success("Success");
         },
       });
     }

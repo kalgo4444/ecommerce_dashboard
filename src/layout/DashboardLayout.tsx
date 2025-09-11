@@ -6,6 +6,8 @@ import { useAuth } from "../features/auth/services/useAuth";
 import { useDispatch } from "react-redux";
 import { removeToken } from "../features/auth/store/authSlice";
 
+import { Toaster } from "sonner";
+
 const DashboardLayout = () => {
   const { getAuthMe } = useAuth();
   const { isError } = getAuthMe();
@@ -16,7 +18,7 @@ const DashboardLayout = () => {
       dis(removeToken());
     }
   }, [isError]);
-  
+
   return (
     <div className="flex">
       <Sidebar />
@@ -24,6 +26,7 @@ const DashboardLayout = () => {
         <Header />
         <div className="min-h-[200vh] overflow-y-auto">
           <Outlet />
+          <Toaster position="top-center" expand={false} />
         </div>
       </main>
     </div>

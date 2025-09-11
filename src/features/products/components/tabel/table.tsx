@@ -6,6 +6,7 @@ import { openCategoryModal, setEditingItem } from "../../store/productsSlice";
 import { jwtDecode, type JwtPayload } from "jwt-decode";
 import { Navigate } from "react-router-dom";
 import { Button } from "antd";
+import { toast } from "sonner";
 
 interface Props {
   body: ICategorys[] | undefined;
@@ -19,7 +20,11 @@ const CustomTable: FC<Props> = ({ body }) => {
   const { deleteCategory } = useProduct();
   const dis = useDispatch();
   const handleDelete = (id: number | undefined) => {
-    deleteCategory.mutate(id);
+    deleteCategory.mutate(id, {
+      onSuccess: () => {
+        toast.success("Deleted");
+      },
+    });
   };
   const handleUpdate = (post: any | undefined) => {
     dis(setEditingItem(post));
