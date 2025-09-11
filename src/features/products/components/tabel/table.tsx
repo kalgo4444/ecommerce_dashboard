@@ -35,9 +35,9 @@ const CustomTable: FC<Props> = ({ body }) => {
   console.log(body);
 
   return (
-    <table className="w-full border-collapse border border-gray-200 shadow-sm text-center">
+    <table className="w-full border-collapse border-gray-200 shadow-sm text-center">
       <thead className="bg-gray-100">
-        <tr>
+        <tr className="h-14">
           <th className="px-4 py-2 text-sm font-semibold text-gray-700 border-b">
             #
           </th>

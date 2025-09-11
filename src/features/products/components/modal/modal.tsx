@@ -47,7 +47,7 @@ const CategoryModal = () => {
   };
 
   return (
-    <Modal closable={false} footer={false} open={categoryModal}>
+    <Modal zIndex={50} closable={false} footer={false} open={categoryModal}>
       <Form
         key={categoryEditingItem?.id}
         initialValues={
@@ -57,7 +57,7 @@ const CategoryModal = () => {
         onFinish={onFinish}
       >
         <Form.Item<FieldType>
-          label="Category Name"
+          label="Enter Category Name"
           name="name"
           rules={[
             { required: true, message: "Please input your Category name!" },
