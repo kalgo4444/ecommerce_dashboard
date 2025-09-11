@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 
 const DashboardLayout = () => {
   const { getAuthMe } = useAuth();
-  const { isError } = getAuthMe();
+  const { isError, data: user } = getAuthMe();
   const dis = useDispatch();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar data={user?.data} />
       <main className="flex-1 p-2">
         <Header />
         <div className="min-h-[200vh] overflow-y-auto">

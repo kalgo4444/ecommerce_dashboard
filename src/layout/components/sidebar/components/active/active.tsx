@@ -2,6 +2,7 @@ import { memo } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeToken } from "../../../../../features/auth/store/authSlice";
+import { Button } from "antd";
 
 const Active = () => {
   const nav = useNavigate();
@@ -13,12 +14,25 @@ const Active = () => {
   };
 
   return (
-    <button
-      className="m-1 text-center text-xl font-semibold py-3 px-1 text-white bg-white/20 rounded transition duration-200"
-      onClick={handleClick}
-    >
-      Log Out
-    </button>
+    <Button className="mx-2" style={{ height: "42px" }} onClick={handleClick}>
+      <span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m16 17 5-5-5-5" />
+          <path d="M21 12H9" />
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+        </svg>
+      </span>
+    </Button>
   );
 };
 

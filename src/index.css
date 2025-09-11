@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 .nav__link {
-  @apply m-1 text-center border-l-4 border-transparent;
+  @apply text-center border-l-4 border-transparent;
 }
 .nav__link.active {
-  @apply bg-white/20 border-white rounded;
+  @apply bg-white text-blue-500 mx-2 rounded-2xl border-white;
 }
 
 .tab_link.active {

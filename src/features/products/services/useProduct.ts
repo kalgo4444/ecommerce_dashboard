@@ -4,7 +4,7 @@ import { API } from "../../../shared/api";
 
 const categoryKey: string = "categoryKey";
 
-export const useProduct = () => {
+export const useCategory = () => {
   const queryClient = useQueryClient();
   const getCategory = () =>
     useQuery<any, ICategorys>({

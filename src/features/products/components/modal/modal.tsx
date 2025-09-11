@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal, type FormProps } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../app/store";
-import { useProduct } from "../../services/useProduct";
+import { useCategory } from "../../services/useProduct";
 import {
   closeCategoryModal,
   removeEditingItem,
@@ -16,7 +16,7 @@ type FieldType = {
 };
 
 const CategoryModal = () => {
-  const { createCategory, updateCategory } = useProduct();
+  const { createCategory, updateCategory } = useCategory();
   const { categoryModal, categoryEditingItem } = useSelector(
     (state: RootState) => state.product
   );
