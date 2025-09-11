@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openCategoryModal, setEditingItem } from "../../store/productsSlice";
 import { jwtDecode, type JwtPayload } from "jwt-decode";
 import { Navigate } from "react-router-dom";
+import { Button } from "antd";
 
 interface Props {
   body: ICategorys[] | undefined;
@@ -55,7 +56,7 @@ const CustomTable: FC<Props> = ({ body }) => {
         {body?.map((post: ICategorys) => (
           <tr
             key={post.id}
-            className="hover:bg-gray-50 transition-colors text-center"
+            className="hover:bg-gray-50 transition-colors text-center h-14"
           >
             <td className="px-4 py-2 text-sm text-gray-700 border-b">
               {post.id}
@@ -69,18 +70,19 @@ const CustomTable: FC<Props> = ({ body }) => {
             <td className="px-4 py-2 text-sm text-gray-700 border-b">
               {user.id === post.user?.id && (
                 <div className="flex items-center gap-3">
-                  <button
+                  <Button
                     onClick={() => handleUpdate(post)}
-                    className="px-2 py-1 bg-blue-500 text-white font-semibold rounded"
+                    className="px-2 py-2 bg-blue-500 text-white font-semibold rounded"
                   >
                     Update
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    type="primary"
                     onClick={() => handleDelete(post.id)}
-                    className="px-2 py-1 bg-blue-500 text-white font-semibold rounded"
+                    className="px-2 py-2 bg-blue-500 text-white font-semibold rounded"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
               )}
             </td>

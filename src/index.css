@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
 .nav__link {
-  @apply m-1 text-center text-white/70 hover:text-white hover:bg-white/10 transition duration-200;
+  @apply m-1 text-center border-l-4 border-transparent;
 }
 .nav__link.active {
-  @apply border-white rounded bg-white/40 text-white;
+  @apply bg-white/20 border-white rounded;
+}
+
+.tab_link.active {
+  @apply border-blue-500 text-blue-500;
 }
 
 @layer base {
@@ -14,8 +18,4 @@
   button {
     @apply cursor-pointer;
   }
-}
-
-.tab_link.active {
-  @apply border-blue-500 bg-neutral-100;
 }

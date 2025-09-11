@@ -8,7 +8,7 @@ const TabNav = () => {
         <NavLink
           end={true}
           className={
-            "tab_link px-3 py-2 duration-200 border-b-2 border-transparent  hover:bg-neutral-100 rounded-t-md"
+            "tab_link px-15 py-2 duration-200 border-b-2 border-transparent hover:text-blue-400 rounded-t-md"
           }
           to={"/products"}
         >
@@ -18,7 +18,7 @@ const TabNav = () => {
       <li>
         <NavLink
           className={
-            "tab_link px-3 py-2 duration-200 border-b-2 border-transparent  hover:bg-neutral-100 rounded-t-md"
+            "tab_link px-15 py-2 duration-200 border-b-2 border-transparent hover:text-blue-400 rounded-t-md"
           }
           to={"category"}
         >
