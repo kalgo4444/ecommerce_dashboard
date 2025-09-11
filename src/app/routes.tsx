@@ -3,9 +3,17 @@ import { useRoutes } from "react-router-dom";
 import NotFound from "../shared/components/not-found/notFound";
 
 const DashboardLayout = lazy(() => import("../layout/DashboardLayout"));
+
 const Statistic = lazy(() => import("../features/statistic/pages/statistic"));
-const Products = lazy(() => import("../features/products/pages/products"));
 const Users = lazy(() => import("../features/users/pages/users"));
+
+const Products = lazy(() => import("../features/products/pages/products"));
+const ProductsTab = lazy(
+  () => import("../features/products/pages/tab_page/products_tab")
+);
+const CategorysTab = lazy(
+  () => import("../features/products/pages/tab_page/categorys_tab")
+);
 
 const Auth = lazy(() => import("../features/auth/pages/auth"));
 const Login = lazy(() => import("../features/auth/pages/login"));
@@ -29,6 +37,16 @@ const AppRoutes = () => {
             {
               path: "/products",
               element: <Products />,
+              children: [
+                {
+                  index: true,
+                  element: <ProductsTab />,
+                },
+                {
+                  path: "category",
+                  element: <CategorysTab />,
+                },
+              ],
             },
             {
               path: "/users",

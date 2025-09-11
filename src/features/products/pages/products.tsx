@@ -1,14 +1,15 @@
 import { memo } from "react";
 import InnerBack from "../../../shared/components/ui/innerBack/innerBack";
-import ProductTable from "../components/tabel/tabel";
-import { PRODUCTS } from "../../../shared/static";
+import { Outlet } from "react-router-dom";
+import TabNav from "../components/tab-nav/tab-nav";
 
 const Products = () => {
   return (
     <>
       <title>Dashboard | Products</title>
       <InnerBack>
-        <ProductTable data={PRODUCTS} />
+        <TabNav />
+        <Outlet />
       </InnerBack>
     </>
   );

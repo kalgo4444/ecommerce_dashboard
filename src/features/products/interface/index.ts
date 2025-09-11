@@ -1,10 +1,9 @@
-export interface IProduct {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  categoryId: number;
-  stock: number;
-  image?: string[];
-  brand?: string;
+export interface ICategorys {
+  id?: number;
+  name: string;
+  user?: {
+    id?: number | string;
+    fname: string;
+    email: string;
+  };
 }

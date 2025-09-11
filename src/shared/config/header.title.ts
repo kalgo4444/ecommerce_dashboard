@@ -1,10 +1,9 @@
 export const headerTitle = (pathname: string) => {
-  switch (pathname) {
-    case "/users":
-      return "Users";
-    case "/products":
-      return "Products";
-    default:
-      return "Statistic";
+  if (pathname.startsWith("/users")) {
+    return "Users";
+  } else if (pathname.startsWith("/products")) {
+    return "Products";
+  } else {
+    return "Statistic";
   }
 };

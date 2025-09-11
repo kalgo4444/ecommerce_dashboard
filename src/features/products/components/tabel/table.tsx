@@ -1,0 +1,94 @@
+import { memo, type FC } from "react";
+import type { ICategorys } from "../../interface";
+import { useProduct } from "../../services/useProduct";
+import { useDispatch } from "react-redux";
+import { openCategoryModal, setEditingItem } from "../../store/productsSlice";
+import { jwtDecode, type JwtPayload } from "jwt-decode";
+import { Navigate } from "react-router-dom";
+
+interface Props {
+  body: ICategorys[] | undefined;
+}
+
+interface CustomJwtPayload extends JwtPayload {
+  id: number;
+}
+
+const CustomTable: FC<Props> = ({ body }) => {
+  const { deleteCategory } = useProduct();
+  const dis = useDispatch();
+  const handleDelete = (id: number | undefined) => {
+    deleteCategory.mutate(id);
+  };
+  const handleUpdate = (post: any | undefined) => {
+    dis(setEditingItem(post));
+    dis(openCategoryModal());
+  };
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+  const user = jwtDecode<CustomJwtPayload>(token);
+  console.log(user);
+  console.log(body);
+
+  return (
+    <table className="w-full border-collapse border border-gray-200 shadow-sm text-center">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="px-4 py-2 text-sm font-semibold text-gray-700 border-b">
+            #
+          </th>
+          <th className="px-4 py-2 text-sm font-semibold text-gray-700 border-b">
+            Name
+          </th>
+          <th className="px-4 py-2 text-sm font-semibold text-gray-700 border-b">
+            User
+          </th>
+          <th className="px-4 text-left py-2 text-sm font-semibold text-gray-700 border-b">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {body?.map((post: ICategorys) => (
+          <tr
+            key={post.id}
+            className="hover:bg-gray-50 transition-colors text-center"
+          >
+            <td className="px-4 py-2 text-sm text-gray-700 border-b">
+              {post.id}
+            </td>
+            <td className="px-4 py-2 text-sm text-gray-700 border-b">
+              {post.name}
+            </td>
+            <td className="px-4 py-2 text-sm text-gray-700 border-b">
+              {post.user?.fname}
+            </td>
+            <td className="px-4 py-2 text-sm text-gray-700 border-b">
+              {user.id === post.user?.id && (
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => handleUpdate(post)}
+                    className="px-2 py-1 bg-blue-500 text-white font-semibold rounded"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => handleDelete(post.id)}
+                    className="px-2 py-1 bg-blue-500 text-white font-semibold rounded"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
+
+export default memo(CustomTable);
