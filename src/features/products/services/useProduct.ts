@@ -7,7 +7,7 @@ const productKey: string = "productKey";
 interface IParams {
   limit?: number;
   skip?: number;
-  order?: "latest" | "expensive" | "cheapest";
+  order?: string;
 }
 
 export const useProducts = () => {
