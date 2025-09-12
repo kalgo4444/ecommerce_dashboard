@@ -1,6 +1,6 @@
 import { memo, useCallback, type FC } from "react";
 import type { ICategorys } from "../../interface";
-import { useCategory } from "../../services/useProduct";
+import { useCategory } from "../../services/useCategory";
 import { useDispatch } from "react-redux";
 import { openCategoryModal, setEditingItem } from "../../store/productsSlice";
 import { jwtDecode, type JwtPayload } from "jwt-decode";
@@ -37,7 +37,6 @@ const CustomTable: FC<Props> = ({ body }) => {
     return <Navigate to="/login" />;
   }
   const user = jwtDecode<CustomJwtPayload>(token);
-  console.log(user);
 
   return (
     <>

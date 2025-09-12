@@ -3,7 +3,7 @@ import { Button, Form, Input, Modal, type FormProps } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../../../app/store";
-import { useCategory } from "../../services/useProduct";
+import { useCategory } from "../../services/useCategory";
 import {
   closeCategoryModal,
   removeEditingItem,
@@ -21,7 +21,6 @@ const CategoryModal = () => {
     (state: RootState) => state.product
   );
   const dis = useDispatch();
-  console.log(categoryEditingItem);
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     if (categoryEditingItem) {
       console.log(categoryEditingItem);
@@ -42,6 +41,7 @@ const CategoryModal = () => {
       createCategory.mutate(values, {
         onSuccess: () => {
           dis(closeCategoryModal());
+          dis(removeEditingItem());
           toast.success("Success");
         },
       });

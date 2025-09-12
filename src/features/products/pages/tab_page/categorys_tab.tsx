@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useCategory } from "../../services/useProduct";
+import { useCategory } from "../../services/useCategory";
 import CustomTable from "../../components/tabel/table";
 import { Button } from "antd";
 import { useDispatch } from "react-redux";

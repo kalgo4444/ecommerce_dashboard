@@ -2,39 +2,47 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ICategorys } from "../interface";
 import { API } from "../../../shared/api";
 
-const categoryKey: string = "categoryKey";
+const productKey: string = "productKey";
 
-export const useCategory = () => {
+interface IParams {
+  limit?: number;
+  skip?: number;
+  order?: "latest" | "expensive" | "cheapest";
+}
+
+export const useProducts = () => {
   const queryClient = useQueryClient();
-  const getCategory = () =>
+
+  const getProduct = (params?: IParams) =>
     useQuery<any, ICategorys>({
-      queryKey: [categoryKey],
+      queryKey: [productKey, params],
       queryFn: () =>
-        API.get("category")
+        API.get("product", { params })
           .then((res) => res.data)
           .then((data) => data.data),
     });
 
-  const createCategory = useMutation<any, any, any>({
-    mutationFn: (body) => API.post("category", body),
+  const createProduct = useMutation<any, any, any>({
+    mutationFn: (body) => API.post("product", body).then((res) => res.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [categoryKey] });
+      queryClient.invalidateQueries({ queryKey: [productKey] });
     },
   });
 
-  const deleteCategory = useMutation<any, any, any>({
-    mutationFn: (id: number) => API.delete(`category/${id}`),
+  const deleteProduct = useMutation<any, any, any>({
+    mutationFn: (id) => API.delete(`product/${id}`).then((res) => res.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [categoryKey] });
+      queryClient.invalidateQueries({ queryKey: [productKey] });
     },
   });
 
-  const updateCategory = useMutation<any, any, { id: number; body: any }>({
-    mutationFn: ({ id, body }) => API.patch(`category/${id}`, body),
+  const updateProduct = useMutation<any, any, any>({
+    mutationFn: ({ id, body }) =>
+      API.patch(`product/${id}`, body).then((res) => res.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [categoryKey] });
+      queryClient.invalidateQueries({ queryKey: [productKey] });
     },
   });
 
-  return { getCategory, createCategory, deleteCategory, updateCategory };
+  return { getProduct, createProduct, deleteProduct, updateProduct };
 };

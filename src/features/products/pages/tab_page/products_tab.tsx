@@ -1,42 +1,54 @@
 import { Button } from "antd";
-import { memo, useState } from "react";
-import { API } from "../../../../shared/api";
+import { memo, useCallback, useState } from "react";
+import Popap from "../../components/popap/popap";
+import { useProducts } from "../../services/useProduct";
+import ItemCard from "../../components/card/item-card";
+import { toast } from "sonner";
+import type { IProduct } from "../../interface";
 
 const ProductsTab = () => {
-  const [files, setFiles] = useState<null | FileList>(null);
+  const [editingItem, setEditingItem] = useState<IProduct | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const images = files && Array.from(files);
+  const { getProduct, deleteProduct } = useProducts();
+  const { data, isLoading } = getProduct({ limit: 20 });
 
-  console.log(images);
+  const showModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+  const handleCancel = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
-  const handleCreateProduct = () => {
-    const formData = new FormData();
-    formData.append("title", "Biznes");
-    formData.append("description", "OLOV");
-    formData.append("price", "99999999999999999999999999999999");
-    formData.append("categoryId", "1");
-    formData.append("stock", "999");
-    images?.forEach((item: File) => formData.append("images", item));
-    API.post("product", formData);
-  };
+  const handleDelete = useCallback((product: IProduct) => {
+    deleteProduct.mutate(product.id, {
+      onSuccess: () => {
+        toast.success(`Deleted`);
+      },
+    });
+  }, []);
+
+  const handleUpdate = useCallback((body: IProduct) => {
+    setEditingItem(body);
+    showModal();
+  }, []);
+
   return (
     <section className="p-3">
-      <input
-      className='border'
-        type="file"
-        onChange={(e) => setFiles(e.target.files)}
-        multiple
-        accept="image/*"
+      <Popap
+        editingItem={editingItem}
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
       />
-      <div>
-        {images?.map((item: File, inx: number) => (
-          <img key={inx} src={URL.createObjectURL(item)} width={200} alt="" />
-        ))}
-      </div>
-
       <div className="flex justify-end my-2">
-        <Button onClick={handleCreateProduct}>Add Product</Button>
+        <Button onClick={showModal}>Add Product</Button>
       </div>
+      <ItemCard
+        handleUpdate={handleUpdate}
+        handleDelete={handleDelete}
+        products={data?.allProducts}
+        isLoading={isLoading}
+      />
     </section>
   );
 };
