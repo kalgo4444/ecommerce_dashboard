@@ -13,6 +13,8 @@ export const useCategory = () => {
         API.get("category")
           .then((res) => res.data)
           .then((data) => data.data),
+      gcTime: 1000 * 60 * 60,
+      staleTime: 1000 * 60 * 30,
     });
 
   const createCategory = useMutation<any, any, any>({

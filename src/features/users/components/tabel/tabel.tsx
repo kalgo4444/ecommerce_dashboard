@@ -8,7 +8,8 @@ interface Props {
 
 const UserTable: FC<Props> = ({ data }) => {
   const { Column } = Table;
-  console.log(data);
+
+  
 
   return (
     <>

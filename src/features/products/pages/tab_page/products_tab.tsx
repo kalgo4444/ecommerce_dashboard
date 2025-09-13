@@ -1,4 +1,4 @@
-import { Button, Select } from "antd";
+import { Button, Pagination, Select } from "antd";
 import { memo, useCallback, useState } from "react";
 import Popap from "../../components/popap/popap";
 import { useProducts } from "../../services/useProduct";
@@ -11,9 +11,13 @@ const ProductsTab = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [limit, setLimit] = useState(12);
   const [order, setOrder] = useState("latest");
+  const [skip, setSkip] = useState(0);
+  const [page, setPage] = useState(1);
 
   const { getProduct, deleteProduct } = useProducts();
-  const { data, isLoading } = getProduct({ limit, order });
+  const { data, isLoading } = getProduct({ limit, order, skip });
+
+  scrollTo(0, 0);
 
   const showModal = useCallback(() => {
     setIsModalOpen(true);
@@ -41,6 +45,12 @@ const ProductsTab = () => {
   const handleOrderChange = (value: string) => {
     setOrder(value);
   };
+  const handlePageChange = (value: number) => {
+    const res = limit * value;
+    console.log(res);
+    setSkip(res);
+    setPage(value);
+  };
   return (
     <section className="p-3">
       <Popap
@@ -53,7 +63,6 @@ const ProductsTab = () => {
           <Select
             defaultValue={""}
             className="w-[200px]"
-            placeholder="Select a limit"
             optionFilterProp="label"
             onChange={handleLimitChange}
             options={[
@@ -78,7 +87,6 @@ const ProductsTab = () => {
           <Select
             defaultValue={"latest"}
             className="w-[200px]"
-            placeholder="Select a Order"
             optionFilterProp="label"
             onChange={handleOrderChange}
             options={[
@@ -105,6 +113,14 @@ const ProductsTab = () => {
         products={data?.allProducts}
         isLoading={isLoading}
       />
+      <div className="mt-10">
+        <Pagination
+          align="center"
+          onChange={handlePageChange}
+          current={page}
+          total={data?.total}
+        />
+      </div>
     </section>
   );
 };
