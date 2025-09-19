@@ -26,10 +26,17 @@ const Login = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     signIn.mutate(values, {
       onSuccess: (res) => {
-        console.log(res);
-        dis(setToken(res.data));
-        dis(removeUser());
-        nav("/");
+        dis(setToken(res.data.accessToken));
+        if (res.data.user.role === "user") {
+          open(
+            `http://localhost:3000/verify?q=${btoa(JSON.stringify(values))}`,
+            "_self"
+          );
+          dis(removeUser());
+        } else {
+          nav("/");
+          dis(removeUser());
+        }
       },
     });
   };

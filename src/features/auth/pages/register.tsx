@@ -28,7 +28,6 @@ const Register = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     signUp.mutate(values, {
       onSuccess: (res) => {
-        console.log(res);
         dis(setUser(values));
         dis(setKey(res.verificationKey));
         nav("/otp");
