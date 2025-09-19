@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUser, setToken } from "../store/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import type { RootState } from "../../../app/store";
+import { PRODUCTION_URL } from "../../../shared/links";
 
 type FieldType = {
   email: string;
@@ -29,7 +30,7 @@ const Login = () => {
         dis(setToken(res.data.accessToken));
         if (res.data.user.role === "user") {
           open(
-            `http://localhost:3000/verify?q=${btoa(JSON.stringify(values))}`,
+            `${PRODUCTION_URL}/verify?q=${btoa(JSON.stringify(values))}`,
             "_self"
           );
           dis(removeUser());
