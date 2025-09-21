@@ -27,7 +27,6 @@ const Login = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
     signIn.mutate(values, {
       onSuccess: (res) => {
-        dis(setToken(res.data.accessToken));
         if (res.data.user.role === "user") {
           open(
             `${PRODUCTION_URL}/verify?q=${btoa(JSON.stringify(values))}`,
@@ -35,6 +34,7 @@ const Login = () => {
           );
           dis(removeUser());
         } else {
+          dis(setToken(res.data.accessToken));
           nav("/");
           dis(removeUser());
         }

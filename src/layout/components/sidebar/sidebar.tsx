@@ -10,7 +10,7 @@ const Sidebar = ({ data }: { data: any }) => {
         </div>
         <div className="flex flex-col">
           <b>{data?.fname}</b>
-          <small>{data?.role || "Admin"}</small>
+          <small>{String(data?.role).toUpperCase()}</small>
         </div>
       </div>
       <Navigate />

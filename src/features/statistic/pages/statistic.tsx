@@ -1,34 +1,24 @@
 import { memo } from "react";
 import InnerBack from "../../../shared/components/ui/innerBack/innerBack";
-import type { StatisticProps } from "antd";
-import { Col, Row, Statistic as AntStatistic } from "antd";
-import CountUp from "react-countup";
+import UsersSta from "../components/users-sta/users-sta";
+import VerticalSta from "../components/vertical-sta/vertical-sta";
+import PieSta from "../components/pie-sta/pie-sta";
 
 const Statistic = () => {
-  const formatter: StatisticProps["formatter"] = (value) => (
-    <CountUp end={value as number} separator="," />
-  );
   return (
     <>
       <title>Dashboard | Statistic</title>
       <InnerBack>
-        <Row gutter={16}>
-          <Col span={12}>
-            <AntStatistic
-              title="Active Users"
-              value={1000000}
-              formatter={formatter}
-            />
-          </Col>
-          <Col span={12}>
-            <AntStatistic
-              title="Account Balance USD"
-              value={1000000}
-              precision={2}
-              formatter={formatter}
-            />
-          </Col>
-        </Row>
+        <div className="mb-10">
+          <h2 className="text-center mt-2 mb-4 font-semibold text-lg">
+            Month New info Numbers
+          </h2>
+          <UsersSta />
+        </div>
+        <div className="grid grid-cols-2 gap-5 h-[40vh]">
+          <PieSta />
+          <VerticalSta />
+        </div>
       </InnerBack>
     </>
   );
